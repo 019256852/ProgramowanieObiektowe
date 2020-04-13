@@ -1,7 +1,10 @@
 #include <iostream>
+#include "menu.h"
 using namespace std;
 int main()
 {
-cout << "Main";
+menu();
+
+return 0;
 }
 

@@ -8,9 +8,88 @@ int tablica::ustawRozmiar(int X, int Y)
 	this->x = X;
 	this->y = Y;
 }
-	
 
-tablica utworz_tablice(size_t x, size_t y)
+tablica::tablica(tablica& b)
+{
+	x = b.x;
+	y = b.y;
+	if (b.tab == nullptr)
+		tab = nullptr;
+	else
+	{
+		tab = new double*[x];
+		for (size_t i = 0; i < x; i++)
+			tab[i] = new double[y];
+	}
+}
+tablica& tablica::operator=(tablica& b)
+{
+	if (tab != nullptr)
+		for (size_t i = 0; i < x; i++)
+			delete[] tab[i];
+	delete[] tab;
+	x = b.x;
+	y = b.y;
+	if (b.tab == nullptr)
+		tab = nullptr;
+	else
+	{
+		tab = new double*[x];
+		for (size_t i = 0; i < x; i++)
+			tab[i] = new double[y];
+	}
+	
+	return *this;
+}
+tablica::tablica(tablica&& b)
+{
+	x = b.x;
+	y = b.y;
+	tab = b.tab;
+	b.x = 0;
+	b.y = 0;
+	b.tab = nullptr;
+}
+tablica& tablica::operator=(tablica&& b)
+{
+	if (tab != nullptr)
+		for (size_t i = 0; i < x; i++)
+			delete[] tab[i];
+	delete[] tab;
+	x = b.x;
+	y = b.y;
+	tab = b.tab;
+	b.x = 0;
+	b.y = 0;
+	b.tab = nullptr;
+	
+	return *this;
+}
+tablica::tablica(size_t x, size_t y)
+{
+	this->x = x;
+	this->y = y;
+	tab = nullptr;
+	if (x == 0 || y == 0) return;
+	tab = new double*[x];
+	for (size_t i = 0; i < x; i++)
+	{
+		tab[i] = new double[y];
+		for (size_t j = 0; j < y; j++)
+		{
+			tab[i][j] = 0;
+		}
+	}
+}
+tablica::~tablica()
+{
+	if (tab != nullptr)
+		for (size_t i = 0; i < x; i++)
+			delete[] tab[i];
+	delete[] tab;
+}	
+
+tablica tablica::utworz_tablice(size_t x, size_t y)
 {
 	tablica tabl;
 	tabl.ustawRozmiar(x,y);
@@ -22,7 +101,7 @@ tablica utworz_tablice(size_t x, size_t y)
 	
 }
 
-void zmien_liczbe(tablica tabl, double liczba, size_t index_x, size_t index_y)
+void tablica::zmien_liczbe(tablica tabl, double liczba, size_t index_x, size_t index_y)
 {
 	
 	if(index_x > tabl.x || index_y > tabl.y)
@@ -32,7 +111,7 @@ void zmien_liczbe(tablica tabl, double liczba, size_t index_x, size_t index_y)
 	tabl.tab[index_x][index_y] = liczba;
 }
 
-void pokaz(tablica tabl)
+void tablica::pokaz(tablica tabl)
 {
 	for (size_t i=0; i<tabl.x; i++)
 	{
@@ -44,7 +123,7 @@ void pokaz(tablica tabl)
 	}	
 }
 
-tablica zmien_rozmiar(tablica tabl, size_t newx, size_t newy)
+tablica tablica::zmien_rozmiar(tablica tabl, size_t newx, size_t newy)
 {
 	tablica newtab=utworz_tablice(newx,newy);
 	for(size_t tx=0; tx<newx; tx++)
@@ -66,7 +145,7 @@ tablica zmien_rozmiar(tablica tabl, size_t newx, size_t newy)
 	return newtab;
 }
 
-tablica wczytaj(size_t &x, size_t &y)
+tablica tablica::wczytaj(size_t &x, size_t &y)
 {
 	ifstream plik;
 	plik.open("plik.txt");
@@ -85,7 +164,7 @@ tablica wczytaj(size_t &x, size_t &y)
 	}
 } 
 
-void zapisz(tablica tabl)
+tablica tablica::zapisz(tablica tabl)
 {
 	ofstream plik;
 	plik.open("plik.txt");
@@ -102,7 +181,7 @@ void zapisz(tablica tabl)
 		} 
 	}	
 } 
-tablica sumuj_pow(tablica tabl)
+tablica tablica::sumuj_pow(tablica tabl)
 {
 	tablica newtab=utworz_tablice(1,tabl.y);
 	for(size_t ty=0; ty<=tabl.y; ty++)
@@ -121,7 +200,7 @@ tablica sumuj_pow(tablica tabl)
 
 
 
-tablica szukaj_pow_najw(tablica tabl)
+tablica tablica::szukaj_pow_najw(tablica tabl)
 {
 	tablica newtab=utworz_tablice(1,tabl.y);
 	for(size_t ty=0; ty<=tabl.y; ty++)
@@ -141,7 +220,7 @@ tablica szukaj_pow_najw(tablica tabl)
 	return newtab;
 }
 
-tablica szukaj_pow_najm(tablica tabl)
+tablica tablica::szukaj_pow_najm(tablica tabl)
 {
 	tablica newtab=utworz_tablice(1,tabl.y);
 	for(size_t ty=0; ty<=tabl.y; ty++)
@@ -161,7 +240,7 @@ tablica szukaj_pow_najm(tablica tabl)
 	return newtab;
 }
 
-tablica szukaj_pow_srednia(tablica tabl)
+tablica tablica::szukaj_pow_srednia(tablica tabl)
 {
 	tablica newtab=utworz_tablice(1,tabl.y);
 	for(size_t ty=0; ty<=tabl.y; ty++)
@@ -179,7 +258,7 @@ tablica szukaj_pow_srednia(tablica tabl)
 }
 
 
-tablica sumuj_pok(tablica tabl)
+tablica tablica::sumuj_pok(tablica tabl)
 {
 	tablica newtab=utworz_tablice(tabl.x,1);
 	for(size_t tx=0; tx<=tabl.x; tx++)
@@ -196,7 +275,7 @@ tablica sumuj_pok(tablica tabl)
 	return newtab;
 }
 
-tablica szukaj_pok_najw(tablica tabl)
+tablica tablica::szukaj_pok_najw(tablica tabl)
 {
 	tablica newtab=utworz_tablice(tabl.x,1);
 	for(size_t tx=0; tx<=tabl.x; tx++)
@@ -216,7 +295,7 @@ tablica szukaj_pok_najw(tablica tabl)
 	return newtab;
 }
 
-tablica szukaj_pok_najm(tablica tabl)
+tablica tablica::szukaj_pok_najm(tablica tabl)
 {
 	tablica newtab=utworz_tablice(tabl.x,1);
 	for(size_t tx=0; tx<=tabl.x; tx++)
@@ -236,7 +315,7 @@ tablica szukaj_pok_najm(tablica tabl)
 	return newtab;
 }
 
-tablica szukaj_pok_srednia(tablica tabl)
+tablica tablica::szukaj_pok_srednia(tablica tabl)
 {
 	tablica newtab=utworz_tablice(tabl.x,1);
 	for(size_t tx=0; tx<=tabl.x; tx++)

@@ -17,7 +17,7 @@ cin>>wybor;
 			cin>>x;
 			cout<<"Podaj liczbe kolumn"<<endl;
 			cin>>y;
-			tabl = utworz_tablice(x,y);
+			tabl = tabl.utworz_tablice(x,y);
 		}
 
 		if(wybor == 2)
@@ -27,7 +27,7 @@ cin>>wybor;
 			cin>>newx;
 			cout<<"Podaj liczbe kolumn"<<endl;
 			cin>>newy;
-			tabl = zmien_rozmiar(tabl,  newx, newy);
+			tabl = tabl.zmien_rozmiar(tabl,  newx, newy);
 		}
 
 		if(wybor == 3)
@@ -40,53 +40,53 @@ cin>>wybor;
 			cin>>newy;
 			cout<<"Podaj liczbe: ";
 			cin>>newnumber;
-			zmien_liczbe(tabl,newnumber, newx, newy);
+			tabl.zmien_liczbe(tabl,newnumber, newx, newy);
 		}
 
 		if(wybor == 4)
 		{	
-			pokaz(tabl);
+			tabl.pokaz(tabl);
 		}
 		if(wybor == 5)
 		{
-			tabl = wczytaj(x,y);
+			tabl = tabl.wczytaj(x,y);
 		}
 	
 		if(wybor == 6)
 		{
-			zapisz(tabl);
+			tabl = tabl.zapisz(tabl);
 		}
 		if(wybor == 7)
 		{
-			tabl = sumuj_pok(tabl);
+			tabl = tabl.sumuj_pok(tabl);
 		}
 		if(wybor == 8)
 		{
-			tabl = sumuj_pow(tabl);
+			tabl = tabl.sumuj_pow(tabl);
 		}
 		if(wybor == 9)
 		{
-			tabl = szukaj_pow_najw(tabl);
+			tabl = tabl.szukaj_pow_najw(tabl);
 		}
 		if(wybor == 10)
 		{
-			tabl = szukaj_pow_najm(tabl);
+			tabl = tabl.szukaj_pow_najm(tabl);
 		}
 		if(wybor == 11)
 		{
-			tabl = szukaj_pow_srednia(tabl);
+			tabl = tabl.szukaj_pow_srednia(tabl);
 		}
 		if(wybor == 12)
 		{
-			tabl = szukaj_pok_najw(tabl);
+			tabl = tabl.szukaj_pok_najw(tabl);
 		}
 		if(wybor == 13)
 		{
-			tabl = szukaj_pok_najm(tabl);
+			tabl = tabl.szukaj_pok_najm(tabl);
 		}
 		if(wybor == 14)
 		{
-			tabl = szukaj_pok_srednia(tabl);
+			tabl = tabl.szukaj_pok_srednia(tabl);
 		}
 
 		if(wybor == 15)
